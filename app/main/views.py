@@ -21,4 +21,13 @@ def new_project():
         new_project = Projects(title=title,category= form.category.data,user=current_user)
         new_project.save_project()
         return redirect(url_for(''))
-    return render_template('project.html',form=form)
+    return render_template('new_project.html',form=form)
+
+@main.route('/project/view')
+def view_project():
+    '''
+    route that returns projects
+    '''
+    project = get_projects()
+    return redirect(url_for('.index'))
+    return render_template('project.html', project=project)
