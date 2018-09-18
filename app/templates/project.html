@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+ {% import 'macros.html' as macro%}
+{% import 'bootstrap/wtf.html' as wtf %}
+{%block styles%}
+  {{ super() }}
+{%endblock%}
+
+<!-- content block -->
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class= "col-md-3"> </div>
+  <div class="col-md-6">
+    <div class="jumbotron">
+      <hr>
+      {{wtf.quick_form(form)}}
+      {{simplemde.load}}
+   </div>
+  </div>
+  <div class= "col-md-3"> </div>
+</div>
+</div>
+{% endblock %}

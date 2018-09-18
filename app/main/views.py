@@ -1,5 +1,8 @@
-from flask import render_template
+from flask import render_template, request,redirect, url_for,abort
 from . import main
+from ..models import User,Projects,Role
+from .forms import ProjectForm
+
 @main.route('/')
 def index():
     '''
@@ -7,3 +10,15 @@ def index():
     '''
     title = 'Home - Welcome to The Best Blog Site Worldwide You Think of It We help share It.'
     return render_template('index.html',title = title)
+
+@main.route('/project/new',methods=['GET','POST'])
+@login_required
+def new_project():
+    form = ProjectForm()
+    if form.validate_on_submit():
+        title = form.title.data
+        content = form.content.data
+        new_project = Projects(title=title,category= form.category.data,user=current_user)
+        new_project.save_project()
+        return redirect(url_for(''))
+    return render_template('project.html',form=form)

@@ -33,7 +33,30 @@ class Projects(db.Model):
     __tablename__= 'projects'
 
     id = db.Column(db.Integer, primary_key=True)
-    Blog_post = db.Column(db.String)
+    title = db.Column(db.string)
+    actual_post = db.Column(db.String)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     category = db.Column(db.String)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+
+    def save_project(self):
+        '''
+        function to save project
+        '''
+        db.session.add(self)
+        db.session.commit()
+
+    @classmethod
+    def clear_projects(cls):
+        '''
+        function that clears all the project form after submission
+        '''
+        Projects.all_projects.clear()
+
+    @classmethod
+    def get_projects(cls,id):
+        '''
+        function that gets particular project when requested by date posted
+        '''
+        projects = Projects.query.order_by(Blog.date_posted.desc()).all()
+        return projects
