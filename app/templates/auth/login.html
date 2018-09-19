@@ -2,7 +2,11 @@
 {% import 'bootstrap/wtf.html' as wtf%}
 
 {% block content %}
-<div class="container"> 
+<div class="container" style="background-color:blue; width:800px;height:500px;position:relative; margin-top:0px">
+ <div style="width:500px; position:relative; right:-120px;top:70px; border:30px solid ghostwhite;" class="panel panel-success">
+ <div class="panel-heading">
+  <div class="panel-body" style="color:black; font-size:15px;">
+
     <div class="row">
       <div class= "col-md-2"> </div>
       <div class="col-md-8">
@@ -12,10 +16,13 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         {{ message }}
         </div>
+        </div>
+        </div>
+
       {% endfor %}
       <!-- Login form -->
       {{wtf.quick_form(login_form)}}
-      <p> Don't have an account? <a href="{{url_for('auth.register')}}">Sign up here</a></p>
+      <p> Don't have an account? <a href="{{url_for('auth.register')}}"style=" font-weight:bolder;  color:blue">Sign up here</a></p>
      </div>
      <div clas="col-md-2"> </div>
     </div>
