@@ -16,18 +16,22 @@ def index():
 
 
 @main.route('/project/new',methods=['GET','POST'])
-
+@login_required
 def new_project():
    
     form = ProjectForm()
     if form.validate_on_submit():
         title = form.title.data
         content = form.content.data
-        actual_post = form.actual_post.data
+        post = form.actual_post.data
+        user=current_user
         filename = photos.save(form.photo.data)
+        photo = form.photo.data
         file_url = photos.url(filename)
-        new_project = Projects(title=title,category= form.category.data,user=current_user)
-        new_project.save_project()
+        new_project = Projects(title=title,category= form.category.data,user=user,photo=file_url)
+         
+        db.session.add(new_project)
+        db.session.commit()
         return redirect(url_for('main.view_project'))
     return render_template('new_project.html',form=form)
 
@@ -37,7 +41,8 @@ def view_project():
     route that returns projects
     '''
     project = Projects.query.filter_by(category='Moringa_School_Project')
-    images = f'images/{filename}'
+    images = 'images/404.jpg'
+
     return render_template('projects.html', project=project, images=images)
 
 @main.route('/add_screenshot',methods= ['POST'])
