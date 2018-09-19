@@ -3,7 +3,7 @@ from . import main
 from ..models import User,Projects,Role
 from flask_login import login_required,current_user
 from .forms import ProjectForm
-from .. import db
+from .. import db, photos
 
 @main.route('/')
 def index():
@@ -23,9 +23,12 @@ def new_project():
     if form.validate_on_submit():
         title = form.title.data
         content = form.content.data
+        actual_post = form.actual_post.data
+        filename = photos.save(form.photo.data)
+        file_url = photos.url(filename)
         new_project = Projects(title=title,category= form.category.data,user=current_user)
         new_project.save_project()
-        return redirect(url_for('.index'))
+        return redirect(url_for('main.view_project'))
     return render_template('new_project.html',form=form)
 
 @main.route('/project/view')
@@ -33,16 +36,15 @@ def view_project():
     '''
     route that returns projects
     '''
-    projects = Projects.query.order_by(Projects.date_posted.desc()).all()
-    return redirect(url_for('.index'))
-    return render_template('project.html', project=project)
+    project = Projects.query.filter_by(category='Moringa_School_Project')
+    return render_template('projects.html', project=project)
 
-# @main.route('/add_screenshot',methods= ['POST'])
-# @login_required
-# def save_screenshot():
-#     if 'photo' in request.files:
-#         filename = photos.save(request.files['photo'])
-#         path = f'photos/{filename}'
-#         Projects.photo = path
-#         db.session.commit()
-#     return  render_template('projects.html')
+@main.route('/add_screenshot',methods= ['POST'])
+@login_required
+def save_screenshot():
+    if 'photo' in request.files:
+        filename = photos.save(request.files['photo'])
+        path = f'photos/{filename}'
+        Projects.photo = path
+        db.session.commit()
+    return  render_template('projects.html')

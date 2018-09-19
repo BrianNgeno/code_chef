@@ -54,8 +54,7 @@ class Projects(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String)
-    actual_post = db.Column(db.String)
-    date_posted = db.Column(db.DateTime, default=datetime.utcnow)  
+    actual_post = db.Column(db.String) 
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     category = db.Column(db.String)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
