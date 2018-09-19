@@ -1,13 +1,23 @@
 <div class="navigation">
     <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <a href="#"><i class="glyphicon glyphicon-home"></i> HOME</a>
+        <a href="/"><i class="glyphicon glyphicon-home"></i> HOME</a>
         <a href="#"><i class="glyphicon glyphicon-king"></i> Moringa Projects</a>
         <a href="#"><i class="glyphicon glyphicon-education"></i> Pitch Ideas</a>
         <a href="#"><i class="glyphicon glyphicon-phone-alt"></i> Contact</a>
     </div>
     &nbsp; <span style="font-size:30px;cursor:pointer; color: white;" onclick="openNav()">&#9776;</span>
+    <ul class="nav navbar-nav navbar-right">
+        {% if current_user.is_authenticated %}
+        <li style="color:white;padding:15px;">{{current_user.username}}</li>
+        <li><a href="{{url_for('auth.logout')}}">Sign out</a></li>
+        {% else %}
+        <li><a href="{{url_for('auth.login')}}"style=" font-weight:bolder; font-size:25px; color:white">Sign in</a></li>
+        {%endif%}
+    </ul>
+
 </div>
+
 <script>
     function openNav() {
         document.getElementById("mySidenav").style.width = "200px";
@@ -30,7 +40,6 @@
         -webkit-box-shadow: 0 4px 4px -3px #232323;
         padding-top: 2px;
         font-family: "Lato", sans-serif;
-        position: fixed;
     }
 
     .navigation a {
@@ -84,3 +93,6 @@
         }
     }
 </style>
+
+               
+
