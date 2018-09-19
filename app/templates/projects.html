@@ -3,7 +3,7 @@
 <div class="container-fluid">
     {% for project in project %}
     <div class="row">
-        <div class="col-md-2"></div>
+        <div class="jumbotron col-md-2"></div>
         <div class="jumbotron col-md-8">
             <img src="{{url_for('static',filename= images)}}" alt="screenshot" class="img-thumbnail">
             <p>{{project.title}}</p>
@@ -11,7 +11,7 @@
             <a href="/"><button class="btn btn-outline-primary btn-sm">Git Hub link</button></a>
             <p>{{project.timestamp.strftime('%D %m %y')}}</p>
         </div>
-        <div class="col-md-2"></div>
+        <div class="jumbotron col-md-2"></div>
     </div>
 {% endfor %}
 </div>

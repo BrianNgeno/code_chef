@@ -37,7 +37,8 @@ def view_project():
     route that returns projects
     '''
     project = Projects.query.filter_by(category='Moringa_School_Project')
-    return render_template('projects.html', project=project)
+    images = f'images/{filename}'
+    return render_template('projects.html', project=project, images=images)
 
 @main.route('/add_screenshot',methods= ['POST'])
 @login_required
