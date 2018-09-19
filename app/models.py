@@ -76,4 +76,33 @@ class Projects(db.Model):
         '''
         Projects.all_projects.clear()
 
-   
+class Comments(db.Model):
+    '''
+    comment class that create instance of comment
+    '''
+    __tablename__ = 'comment'
+
+    #add columns
+    id = db.Column(db. Integer, primary_key=True)
+    comment_name = db.Column(db.String(255))
+    date_posted = db.Column(db.DateTime, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    blog_id = db.Column(db.Integer, db.ForeignKey("blogs.id"))
+
+    def save_comment(self):
+        '''
+        save the comment per blog
+        '''
+        db.session.add(self)
+        db.session.commit()
+
+    @classmethod
+    def get_comments(cls,id):
+        comment = Comments.query.order_by (Comments.date_posted.desc()).all()
+        return comment 
+
+    @classmethod
+    def delete_comment(cls,id):
+        comment = Comments.query.filter_by(id=id).first()
+        db.session.delete(comment)
+        db.session.commit()

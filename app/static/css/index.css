@@ -1,15 +1,16 @@
-body {
-    font-family: 'Righteous', cursive !important;
+* {
+    font-family: 'Merienda', cursive;
     font-size: 20px;
-    background-image: url('../images/background.jpg') !important;
-    background-attachment: fixed !important;
-    background-repeat: no-repeat;
 }
-img{
-    size:1200px 800px !important;
+
+body {
+    font-family: 'Merienda', cursive;
+    font-size: 20px;
+    background-image: url('../images/background1.jpg') !important;
+    background-attachment: fixed;
 }
 .jumbotron{
-    background-color:rgba(243, 83, 55, 0.5) !important;
+    background-color:rgba(33, 34, 34, 0.5) !important;
     color: white !important ;
     opacity: 0.9px !important;
     margin-right: 5px !important;

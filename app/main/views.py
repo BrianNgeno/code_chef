@@ -23,7 +23,7 @@ def new_project():
     if form.validate_on_submit():
         title = form.title.data
         content = form.content.data
-        post = form.actual_post.data
+        actual_post = form.post.data
         user=current_user
         filename = photos.save(form.photo.data)
         photo = form.photo.data
