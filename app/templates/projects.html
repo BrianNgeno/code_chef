@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+<div class="container-fluid">
+    <div class="row">
+        {% for project in project %}
+        <div class="col-md-2"></div>
+        <div class="jumbotron col-md-8">
+            <!-- <img src="{{url_for('static',filename=projects.photo)}}" alt="screenshot" class="img-thumbnail"> -->
+            <p>{{project.title}}</p>
+            <p>{{project.category}}</p>
+            <p>{{project.actual_post}}</p>
+            <p>{{project.date_posted.strftime('%D %m %y')}}</p>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>

@@ -2,8 +2,9 @@ from . import db
 from werkzeug.security import generate_password_hash,check_password_hash
 from datetime import datetime
 from flask_login import UserMixin
+from . import login_manager
 
-class User(UserMixin,db.Model):
+class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer,primary_key = True)
     username = db.Column(db.String(255),index = True)
@@ -15,6 +16,10 @@ class User(UserMixin,db.Model):
     password_hash = db.Column(db.String(255))
     projects = db.relationship("Projects", backref="user", lazy="dynamic")
     comment = db.relationship("Comments", backref="user", lazy ="dynamic")
+
+    # @login_manager.user_loader
+    # def load_user(self, id):
+    #     return User.query.get(int(id))
 
 class Role(db.Model):
        __tablename__ = 'roles'
@@ -33,11 +38,12 @@ class Projects(db.Model):
     __tablename__= 'projects'
 
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.string)
+    title = db.Column(db.String)
     actual_post = db.Column(db.String)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     category = db.Column(db.String)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    photo = db.Column(db.String)
 
     def save_project(self):
         '''
