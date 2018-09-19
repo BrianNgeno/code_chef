@@ -5,5 +5,5 @@ from wtforms.validators import Required, Email, EqualTo
 class ProjectForm(FlaskForm):
     title = StringField('Project title',validators=[Required()])
     category = SelectField('Category',choices=[('Moringa_School_Project','Moringa_School_Project'),('General_Project','General_Project')])
-    content = TextAreaField('Your Blog.',validators=[Required()])
+    content = TextAreaField('Github Link',validators=[Required()])
     submit = SubmitField('Submit')

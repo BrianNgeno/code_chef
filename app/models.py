@@ -18,7 +18,6 @@ class User(db.Model):
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
     password_hash = db.Column(db.String(255))
-    pass_secure = db.Column(db.String(255))
     projects = db.relationship("Projects", backref="user", lazy="dynamic")
     # comment = db.relationship("Comments", backref="user", lazy ="dynamic")
   
@@ -29,10 +28,10 @@ class User(db.Model):
 
     @password.setter
     def password(self, password):
-        self.pass_secure = generate_password_hash(password)
+        self.password_hash = generate_password_hash(password)
 
     def verify_password(self,password):
-            return check_password_hash(self.pass_secure, password)
+            return check_password_hash(self.password_hash, password)
 
     def __repr__(self):
         return f'User {self.username}'
@@ -56,6 +55,7 @@ class Projects(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String)
     actual_post = db.Column(db.String)
+    date_posted = db.Column(db.DateTime, default=datetime.utcnow)  
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     category = db.Column(db.String)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
@@ -75,10 +75,4 @@ class Projects(db.Model):
         '''
         Projects.all_projects.clear()
 
-    @classmethod
-    def get_projects(cls,id):
-        '''
-        function that gets particular project when requested by date posted
-        '''
-        projects = Projects.query.order_by(Blog.date_posted.desc()).all()
-        return projects
+   

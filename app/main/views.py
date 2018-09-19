@@ -16,8 +16,9 @@ def index():
 
 
 @main.route('/project/new',methods=['GET','POST'])
-@login_required
+
 def new_project():
+   
     form = ProjectForm()
     if form.validate_on_submit():
         title = form.title.data
@@ -32,7 +33,7 @@ def view_project():
     '''
     route that returns projects
     '''
-    project = get_projects()
+    projects = Projects.query.order_by(Projects.date_posted.desc()).all()
     return redirect(url_for('.index'))
     return render_template('project.html', project=project)
 
