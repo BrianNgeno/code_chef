@@ -1,9 +1,9 @@
 from flask import render_template, request,redirect, url_for,abort
 from . import main
-from ..models import User,Projects,Role
-from flask_login import login_required,current_user
-from .forms import ProjectForm
+from ..models import User,Projects,Role,Comments
+from .forms import ProjectForm, CommentForm
 from .. import db, photos
+from flask_login import login_required,current_user
 
 @main.route('/')
 def index():
@@ -41,16 +41,33 @@ def view_project():
     route that returns projects
     '''
     project = Projects.query.filter_by(category='Moringa_School_Project')
+    Projec = Projects.query.filter_by(category='General_Project')
     images = 'images/404.jpg'
 
-    return render_template('projects.html', project=project, images=images)
+    return render_template('projects.html', project=project, images=images,projec=projec)
 
-@main.route('/add_screenshot',methods= ['POST'])
+
+@main.route('/new/comment/<int:id>',methods = ['GET','POST'])
 @login_required
-def save_screenshot():
-    if 'photo' in request.files:
-        filename = photos.save(request.files['photo'])
-        path = f'photos/{filename}'
-        Projects.photo = path
+def new_comment(id):
+    form = CommentForm()
+    if form.validate_on_submit():
+        view = Comments(comment_name = form.comment_name.data,user=current_user, projects_id =id)
+        view.save_comment()
+        return redirect(url_for('main.view_comments'))
+    return render_template('comments.html',form = form,view=view)
+
+@main.route('/comment/<int:id>/view')
+def view_comments(id):
+    comment = Comments.query.filter_by(project_id = id)
+    return render_template('comment.html',comment = comment)
+
+@main.route('/delete_comment/<int:id>')
+@login_required
+def delete_comment(id):
+    if current_user.is_authenticated:
+        comment = Comments.query.filter_by(id = id).first()
+        db.session.delete(comment)
         db.session.commit()
-    return  render_template('projects.html')
+        return redirect(url_for('main.view_comments'))
+    return render_template('comments.html')

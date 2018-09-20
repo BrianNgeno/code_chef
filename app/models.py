@@ -80,14 +80,14 @@ class Comments(db.Model):
     '''
     comment class that create instance of comment
     '''
-    __tablename__ = 'comment'
+    __tablename__ = 'comments'
 
     #add columns
     id = db.Column(db. Integer, primary_key=True)
     comment_name = db.Column(db.String(255))
     date_posted = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
-    blog_id = db.Column(db.Integer, db.ForeignKey("blogs.id"))
+    projects_id = db.Column(db.Integer, db.ForeignKey("projects.id"))
 
     def save_comment(self):
         '''

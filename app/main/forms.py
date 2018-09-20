@@ -11,3 +11,7 @@ class ProjectForm(FlaskForm):
     content = TextAreaField('Github Link',validators=[Required('File is empty')])
     photo = FileField(validators=[FileAllowed(photos, u'Image only!'), FileRequired(u'File was empty!')])
     submit = SubmitField('Submit')
+
+class CommentForm(FlaskForm):
+    comment_name = TextAreaField('Blog comment', validators=[Required()])
+    submit = SubmitField('Submit')
