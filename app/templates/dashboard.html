@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% import 'macros.html' as macro %}
+{% import 'bootstrap/wtf.html' as wtf %}
+<!-- Content block -->
+{% block content %}
+{% if type=='post' %}
+
+    <div class="container-fluid ">
+        <form id ="createform">
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <div class="inputBox">
+                        <textarea id="pitch_ideas" class="input" placeholder="Enter Project" name="pitch_ideas" required></textarea>
+
+                    </div>
+                </div>
+            </div>
+            <select name="category" id="catchoose" class="form-control" onchange="recordchange(this.selectedIndex,{{categories.__len__()}})">
+              {% for category in categories %}
+                <option value="{{category[0]}}" style="color: #555">{{category[0]}}</option>
+              {% endfor %}
+              <option value="-" style="color: #000">New</option>
+            </select>
+    
+                <div class="row">
+                    <div class="col-md-8 offset-md-2">
+                        <input type="submit"  class="button" value="Submit">
+                    </div>
+                </div>
+        </form>
+      <h3 class="navbarpadder">Projects:</h3>
+
+   
+
+
+        <div class="row text-center">
+            <div class="col-sm-6">
+              <div class="contact-detail-box">
+                <div id="pitches" class="panel-group">
+                    {{ macro.displayposts(posts) }}
+                  </div>
+                  </div></div>
+
+                  <div class="col-sm-6">
+                    <div class="contact-detail-box">
+                      <div id="pitches" class="panel-group">
+                          {{ macro.displayposts(uncompleted) }}
+                        </div>
+                        </div>
+                    </div>
+                    {{ macro.displaycomments(comments) }}
+
+                        </div>
+                    </div>
+
+                    {{ macro.displayposts(posts) }}
+                    {% else %}
+                      {{ macro.displaycomments(comments) }}
+                    {% endif %}
+{% endblock %}
+

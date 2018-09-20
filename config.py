@@ -4,6 +4,8 @@ class Config():
     '''
     parent class config
     '''
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://yego:pass123@localhost/codechef'
+
     
     @staticmethod
     def init_app(app):
@@ -13,6 +15,8 @@ class ProdConfig(Config):
     pass
 
 class DevConfig(Config):
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://yego:pass123@localhost/codechef'
+
     DEBUG = True
 
 
