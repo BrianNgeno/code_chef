@@ -1,0 +1,10 @@
+          <div class="panel-footer">
+            <div class="rightist">
+              <a class="pull-left">{{post.comments.count()}} Comments</a>
+              <div class="label glyphicon glyphicon-thumbs-up like"> {{post.likes.count()}} </div>
+              <div class="label glyphicon glyphicon-thumbs-down dislike"> {{post.dislikes.count()}} </div>
+            </div>
+          </div>
+
+
+          

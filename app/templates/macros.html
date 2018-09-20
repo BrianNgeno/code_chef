@@ -1,0 +1,83 @@
+
+{% macro displaycomments(comments) %}
+{% for comment in comments %}
+<div>
+  <span>{{comment.details}}</span>
+</div>
+{% endfor %}
+{% endmacro %}
+
+{% macro displayposts(posts) %}
+    {% for post in posts %}
+    <div class="wrapper">
+    <div class="position-right">
+        <div class="row">
+            <div class="panel panel-default" id="post{{post.id}}">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        
+                        {{post.category}}</h3>
+                </div>
+    <div class="panel-body">
+        <ul class="list-group">
+            <li class="list-group-item">
+                <div class="row">
+                    <!-- <div class="col-xs-12 col-md-6">
+                        <img src="http://placehold.it/80" class="img-circle img-responsive" alt="" /></div> -->
+                    <div class="col-xs-10 col-md-11">
+                        <div>
+                            <div class="mic-info">
+                                e <a href="#">{{post.project}}</a>
+                            </div>
+                        </div>
+                        <div class="comment-text">
+                            {{post.Project}}
+                        </div>
+                        <div class="mic-info">
+                                <i><a href="#">{{post.timestamp.strftime('%D %m %y')}}</a></i>
+                            </div>
+                            <div id="commentssection{{post.id}}" class="commentssection">
+                                <div id="comments{{post.id}}">
+                                  {{displaycomments(post.comments.all())}}
+                                </div>
+                                  <form class="form form-inline" id="comment{{post.id}}" onsubmit="submitcomment({{post.id}});return false">
+                                    <input name="details" class="form-control commentinput" cols="30" rows="1" placeholder="React ..." required></input>
+                                    <input type="hidden" value="{{post.id}}" name="post">
+                                    <button type="submit" class="btn btn-success smaller">send</button>
+                                  </form>
+                              </div>
+                        <div class="action">
+                            <button type="button" class="btn btn-primary btn-xs" title="Edit">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
+                            <button type="button" class="btn btn-success btn-xs"  id="complete{{post.id}}" onclick="complete({{post.id}})"  title="Completed">
+                                <span class="glyphicon glyphicon-ok"></span>
+                            </button>
+                            <button type="button" class="btn btn-danger btn-xs" id="delete{{post.id}}" onclick="delete_post({{post.id}})" title="Delete">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </button>
+                            <button type="button" class="btn btn-default btn-xs" onclick="$('#commentssection{{post.id}}').slideToggle();$('html,body').animate({scrollTop: $('#post{{post.id}}').offset().top-50},'slow');" class="pull-left">
+                                    <span  class="glyphicon glyphicon-comment"  id="commentscount{{post.id}}">{{post.comments.count()}}</span> Comments
+                                  </a>
+                            </button>
+                        </div>
+                        
+                    </div>
+                </div>
+                </div>
+            </li>
+        </ul>
+                    <a href="#" class="btn btn-primary btn-sm btn-block" role="button"><span class="glyphicon glyphicon-refresh"></span> More</a>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    </div>
+           
+      {% endfor %}
+{% endmacro %}
+
+
+
