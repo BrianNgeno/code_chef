@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% import 'macros.html' as macro%}
+{% import 'bootstrap/wtf.html' as wtf %}
+{%block styles%}
+{{ super() }}
+{%endblock%}
+
+<!-- content block -->
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"> </div>
+        <div class="col-md-6">
+            <div class="jumbotron">
+                <hr>
+                {{wtf.quick_form(form)}}
+            </div>
+        </div>
+        <div class="col-md-3"> </div>
+    </div>
+</div>
+
+{% for data in comment %}
+<div class="card col-md-4" id="card" style="width: 30rem;">
+    <div class="card-header success-color white-text">
+        {{data.comment_name}}
+    </div>
+    <div class="card-body">
+        <a href="/delete_comment/{{data.id}}" class="btn btn-outline btn-danger btn-sm">Delete Comment</a>
+    </div>
+    <div class="card-footer success-color white-text">
+        <p class="mb-0">{{data.timestamp.strftime('%D')}}</p>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

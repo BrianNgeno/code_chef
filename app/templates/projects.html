@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid">
+    {% for project in project %}
+    <div class="card  col-md-4"  id="card" style="width: 30rem;">
+        <div class="card-header success-color white-text">
+            {{project.title | capitalize}}
+        </div>
+        <div class="card-body" id="card">
+            <h4 class="card-title">{{project.category}}</h4>
+            <p class="card-text">{{project.actual_post}}</p>
+            <img src="{{url_for('static',filename=project.photo)}}" alt="screenshot" class="img-thumbnail">
+            <br>
+
+            <a href="{{project.link}}" class="btn btn-success btn-sm">Git Hub link</a>
+            <a href="{{url_for('main.new_comment',id=project.id)}}" class="btn btn-outline btn-primary btn-sm">Add
+                Comment</a>
+        </div>
+        <div class="card-footer success-color white-text" id="card">
+            <p class="mb-0">{{project.timestamp.strftime('%D')}}</p>
+        </div>
+    </div>
+
+    {% endfor %}
+
+    {% for items in projo %}
+    <div class="card  col-md-4" id="card" style="width: 30rem;">
+        <div class="card-header success-color white-text">
+            {{items.title | capitalize}}
+        </div>
+        <div class="card-body">
+            <h4 class="card-title">{{items.category}}</h4>
+            <p class="card-text">{{items.actual_post}}</p>
+            <img src="{{url_for('static',filename=items.photo)}}" alt="screenshot" class="img-thumbnail">
+            <br>
+            <a href="{{items.link}}" class="btn btn-success btn-sm">Git Hub link</a>
+            <a href="{{url_for('main.new_comment',id=items.id)}}" class="btn btn-outline btn-primary btn-sm">Add
+                Comment</a>
+        </div>
+        <div class="card-footer  success-color white-text">
+            <p class="mb-0">{{items.timestamp.strftime('%D')}}</p>
+        </div>
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    /* Create three equal columns that floats next to each other */
+    .column {
+        float: left;
+        width: 33.33%;
+        padding: 10px;
+        height: 300px;
+        /* Should be removed. Only for demonstration */
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+</style>

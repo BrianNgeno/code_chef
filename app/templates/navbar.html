@@ -2,17 +2,17 @@
     <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <a href="/"><i class="glyphicon glyphicon-home"></i> HOME</a>
-        <a href="#"><i class="glyphicon glyphicon-king"></i> Moringa Projects</a>
+        <a href="/project/view"><i class="glyphicon glyphicon-king"></i>Projects</a>
         <a href="#"><i class="glyphicon glyphicon-education"></i> Pitch Ideas</a>
         <a href="#"><i class="glyphicon glyphicon-phone-alt"></i> Contact</a>
     </div>
     &nbsp; <span style="font-size:30px;cursor:pointer; color: white;" onclick="openNav()">&#9776;</span>
     <ul class="nav navbar-nav navbar-right">
         {% if current_user.is_authenticated %}
+        <li><a  href="{{url_for('auth.logout')}}">Sign out</a></li>
         <li style="color:white;padding:15px;">{{current_user.username}}</li>
-        <li><a href="{{url_for('auth.logout')}}">Sign out</a></li>
         {% else %}
-        <li><a href="{{url_for('auth.login')}}"style=" font-weight:bolder; font-size:25px; color:white">Sign in</a></li>
+        <li><a href="{{url_for('auth.login')}}" style=" font-weight:bolder; font-size:25px; color:white">Sign in</a></li>
         {%endif%}
     </ul>
 
@@ -27,72 +27,3 @@
         document.getElementById("mySidenav").style.width = "0";
     }
 </script>
-
-<style>
-    .navigation {
-        width: 100%;
-        z-index: 1;
-        top: 0;
-        left: 0;
-        background-color: crimson;
-        box-shadow: 0 4px 4px -3px #232323;
-        -moz-box-shadow: 0 4px 4px -3px #232323;
-        -webkit-box-shadow: 0 4px 4px -3px #232323;
-        padding-top: 2px;
-        font-family: "Lato", sans-serif;
-    }
-
-    .navigation a {
-        text-decoration: none;
-        font-family: 'Montserrat', sans-serif;
-        font-size: 14px;
-
-    }
-
-    .sidenav {
-        height: 100%;
-        width: 0;
-        position: fixed;
-        z-index: 1;
-        top: 0;
-        left: 0;
-        background-color: rgba(12, 11, 11, 0.2);
-        overflow-x: hidden;
-        transition: 0.5s;
-        padding-top: 60px;
-    }
-
-    .sidenav a {
-        padding: 8px 8px 8px 32px;
-        text-decoration: none;
-        color: #050101;
-        display: block;
-        transition: 0.3s;
-    }
-
-    .sidenav a:hover {
-        color: crimson;
-        text-decoration: none;
-    }
-
-    .sidenav .closebtn {
-        position: absolute;
-        top: 0;
-        right: 25px;
-        font-size: 36px;
-        margin-left: 50px;
-    }
-
-    @media screen and (max-height: 450px) {
-        .sidenav {
-            padding-top: 15px;
-        }
-
-        .sidenav a {
-            font-size: 18px;
-        }
-    }
-</style>
-
-               
-
