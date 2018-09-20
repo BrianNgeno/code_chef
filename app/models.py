@@ -17,7 +17,7 @@ class User(UserMixin,db.Model):
     profile_pic_path = db.Column(db.String())
     password_hash = db.Column(db.String(255))
     projects = db.relationship("Projects", backref="user", lazy="dynamic")
-    comment = db.relationship("Comments", backref="user", lazy ="dynamic")
+    comments = db.relationship("Comments", backref="user", lazy ="dynamic")
   
 
     @login_manager.user_loader
