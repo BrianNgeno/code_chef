@@ -1,0 +1,49 @@
+
+
+{% extends 'base.html'%}
+
+{% block content %}
+<div style="background-color:aliceblue; height:700px">
+<div class="container">
+<div class="well">
+
+<div class="row">
+
+
+  <div class="col-md-4">
+    <h3> {{user.username| capitalize}} </h3>
+
+    {% if user.bio %}
+      <p style="font-size:20px"> {{user.bio}}</p>
+
+    {%else%}
+      <p> {{user.username| capitalize}} has no bio </p>
+    {% endif %}
+
+    {% if user == current_user %}
+      <a style="font-size:20px;" href="{{url_for('main.update_profile',uname=user.username)}}">Edit profile</a>
+    {% endif %}
+  </div>
+  <div class="col-md-4">
+    {% if user.profile_pic_path %}
+
+    <img style ="border-radius:50%;width:150px;"src="{{url_for('static',filename=user.profile_pic_path)}}" alt="" class="img-thumbnail">
+
+    {%else%}
+    <p>No profile picture</p>
+
+    {% endif %}
+    <form  action="{{url_for('main.update_pic',uname=user.username)}}" method="post" enctype = "multipart/form-data">
+
+      <input type="file"  name="photo" class="form-control" required>
+      <input type="submit">
+
+    </form>
+  </div>
+  </div>
+
+</div>
+
+</div>
+</div>
+{% endblock %}
