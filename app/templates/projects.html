@@ -9,9 +9,11 @@
             <div class="card-body">
                     <h4 class="card-title">{{project.category}}</h4>
                     <p class="card-text">{{project.actual_post}}</p>
-                    <img src={{project.photo}} alt="screenshot" class="img-thumbnail">
+                    <img src="{{url_for('static',filename=project.photo)}}" alt="screenshot" class="img-thumbnail">
                     <br>
+
                     <a href="/" class="btn btn-success btn-sm" >Git Hub link</a>
+                    <a href="{{url_for('main.new_comment',id=project.id)}}" class="btn btn-outline btn-primary btn-sm" >Add Comment</a>
                 </div>
             <div class="card-footer text-muted success-color white-text">
                         <p class="mb-0">{{project.timestamp.strftime('%D %m %y')}}</p>
@@ -20,20 +22,20 @@
 
     {% endfor %}
     
-    {% for item in projec %}
+    {% for items in projo %}
         <div class="card text-center col-md-4" style="width: 30rem;">
             <div class="card-header success-color white-text">
-                {{projec.title}}
+                {{items.title}}
             </div>
             <div class="card-body">
-                    <h4 class="card-title">{{projec.category}}</h4>
-                    <p class="card-text">{{projec.actual_post}}</p>
-                    <img src={{projec.photo}} alt="screenshot" class="img-thumbnail">
+                    <h4 class="card-title">{{items.category}}</h4>
+                    <p class="card-text">{{items.actual_post}}</p>
+                    <img src="{{url_for('static',filename=items.photo)}}" alt="screenshot" class="img-thumbnail">
                     <br>
                     <a href="/" class="btn btn-success btn-sm" >Git Hub link</a>
                 </div>
             <div class="card-footer text-muted success-color white-text">
-                        <p class="mb-0">{{projec.timestamp.strftime('%D %m %y')}}</p>
+                        <p class="mb-0">{{items.timestamp.strftime('%D %m %y')}}</p>
                     </div>
                 </div>
 

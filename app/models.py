@@ -85,7 +85,7 @@ class Comments(db.Model):
     #add columns
     id = db.Column(db. Integer, primary_key=True)
     comment_name = db.Column(db.String(255))
-    date_posted = db.Column(db.DateTime, default=datetime.utcnow)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     projects_id = db.Column(db.Integer, db.ForeignKey("projects.id"))
 

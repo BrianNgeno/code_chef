@@ -25,10 +25,11 @@ def new_project():
         content = form.content.data
         actual_post = form.post.data
         user=current_user
-        filename = photos.save(form.photo.data)
-        photo = form.photo.data
-        file_url = photos.url(filename)
-        new_project = Projects(title=title,category= form.category.data,user=user,photo=file_url)
+        filename = photos.save(request.files['photo'])
+        path = f'photos/{filename}'
+
+        new_project = Projects(title=title,actual_post=actual_post,category= form.category.data,user=user,photo=path)
+
          
         db.session.add(new_project)
         db.session.commit()
@@ -41,26 +42,23 @@ def view_project():
     route that returns projects
     '''
     project = Projects.query.filter_by(category='Moringa_School_Project')
-    Projec = Projects.query.filter_by(category='General_Project')
+    projo = Projects.query.filter_by(category='General_Project')
     images = 'images/404.jpg'
 
-    return render_template('projects.html', project=project, images=images,projec=projec)
+    return render_template('projects.html', project=project, images=images,projo=projo)
 
 
 @main.route('/new/comment/<int:id>',methods = ['GET','POST'])
 @login_required
 def new_comment(id):
     form = CommentForm()
-    if form.validate_on_submit():
-        view = Comments(comment_name = form.comment_name.data,user=current_user, projects_id =id)
-        view.save_comment()
-        return redirect(url_for('main.view_comments'))
-    return render_template('comments.html',form = form,view=view)
+    comment = Comments.query.filter_by(projects_id = id)
 
-@main.route('/comment/<int:id>/view')
-def view_comments(id):
-    comment = Comments.query.filter_by(project_id = id)
-    return render_template('comment.html',comment = comment)
+    if form.validate_on_submit():
+        views = Comments(comment_name = form.comment_name.data,user=current_user, projects_id =id)
+        views.save_comment()
+        return redirect(url_for('main.new_comment',id=id))
+    return render_template('comments.html',form = form, comment = comment)
 
 @main.route('/delete_comment/<int:id>')
 @login_required
@@ -69,5 +67,11 @@ def delete_comment(id):
         comment = Comments.query.filter_by(id = id).first()
         db.session.delete(comment)
         db.session.commit()
-        return redirect(url_for('main.view_comments'))
+        return redirect(url_for('main.view_comment',id=id))
     return render_template('comments.html')
+
+@main.route('/view_comment/<int:id>')
+@login_required
+def view_comment(id):
+    comment = Comments.query.filter_by(id = id).first()
+    return render_template('comments.html',comment=comment)
