@@ -1,6 +1,6 @@
 from flask import render_template, request,redirect, url_for,abort
 from . import main
-from ..models import User,Projects,Role,Comments
+from ..models import User,Projects,Comments
 from .forms import ProjectForm, CommentForm
 from .. import db, photos
 from flask_login import login_required,current_user
@@ -22,7 +22,7 @@ def new_project():
     form = ProjectForm()
     if form.validate_on_submit():
         title = form.title.data
-        content = form.content.data
+        content = form.link.data
         actual_post = form.post.data
         user=current_user
         filename = photos.save(request.files['photo'])
@@ -60,18 +60,25 @@ def new_comment(id):
         return redirect(url_for('main.new_comment',id=id))
     return render_template('comments.html',form = form, comment = comment)
 
-@main.route('/delete_comment/<int:id>')
+@main.route('/delete_comment/<int:id>', methods=['GET','POST'])
 @login_required
 def delete_comment(id):
+    form = CommentForm()
+
     if current_user.is_authenticated:
         comment = Comments.query.filter_by(id = id).first()
         db.session.delete(comment)
         db.session.commit()
-        return redirect(url_for('main.view_comment',id=id))
-    return render_template('comments.html')
+        return redirect(url_for('main.view_project',form=form))
+        return ''
 
 @main.route('/view_comment/<int:id>')
 @login_required
 def view_comment(id):
+    form = CommentForm()
     comment = Comments.query.filter_by(id = id).first()
-    return render_template('comments.html',comment=comment)
+    if form.validate_on_submit():
+        views = Comments(comment_name = form.comment_name.data,user=current_user, projects_id =id)
+        views.save_comment()
+        return redirect(url_for('main.'))
+    return render_template('comments.html',comment=comment,form=form)

@@ -20,10 +20,17 @@
 </div>
 </div>
 {% for data in comment %}
-<div class="jumbotron col-md-8">
-  <P>{{data.comment_name}}</P>
-  <p>{{data.timestamp}}</p>
-  <a href="/delete_comment/{{data.id}}"> <button class="btn btn-outline-danger btn-sm"  style="color:white;">Delete Comment</a></button>
-</div>
+<div class="card col-md-4" style="width: 30rem;">
+    <div class="card-header success-color white-text">
+        {{data.comment_name}}
+    </div>
+    <div class="card-body">
+            <a href="/delete_comment/{{data.id}}" class="btn btn-outline btn-danger btn-sm" >Delete Comment</a>
+        </div>
+    <div class="card-footer success-color white-text">
+                <p class="mb-0">{{data.timestamp.strftime('%D')}}</p>
+            </div>
+        </div>
+
 {% endfor %}
 {% endblock %}
